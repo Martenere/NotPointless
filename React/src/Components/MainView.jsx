@@ -3,7 +3,7 @@ import { useState } from "react";
 import setting from "../assets/settings.svg";
 import user from "../assets/user.svg";
 
-const pages = ["Main", "Hub", "Recent"];
+const pages = ["Points Stored in Database", "Get Random Points", "Recent"];
 function MainView() {
   const [targetPage, setTargetPage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -12,11 +12,18 @@ function MainView() {
 
   const changePage = (page) => {
     setTargetPage(page);
+    if (page === 0) getStoredPointData();
+    if (page === 1) getRandomPointData();
   };
 
-  function getData() {
+  const getRandomPointData = () =>
+    getPointData("https://localhost:5001/points/12Randompoint");
+  const getStoredPointData = () =>
+    getPointData("https://localhost:5001/points/");
+
+  function getPointData(url) {
     let data;
-    fetch("https://localhost:5001/points/12Randompoint")
+    fetch(url)
       .then((response) => {
         // Check if the response was ok (status in the range 200-299)
         if (!response.ok) {
@@ -33,6 +40,7 @@ function MainView() {
         console.error("Fetch error: " + error.message);
       });
   }
+
   console.log("Current Api data", apiData);
   return (
     <div className="Main-View">
@@ -48,7 +56,6 @@ function MainView() {
                     (targetPage == index ? "primary" : "secondary")
                   }
                   onClick={() => {
-                    getData();
                     setIsHovered(true);
                     changePage(index);
                   }}
