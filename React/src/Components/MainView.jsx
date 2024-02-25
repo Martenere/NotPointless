@@ -1,13 +1,11 @@
+import ContentPanel from "./ContentPanel/ContentPanel";
+import LeftMenu from "./LeftMenu/LeftMenu";
 import "./MainView.css";
 import { useState } from "react";
-import setting from "../assets/settings.svg";
-import user from "../assets/user.svg";
 
-const pages = ["Points Stored in Database", "Get Random Points", "Recent"];
+// const pages = ["Points Stored in Database", "Get Random Points", "Recent"];
 function MainView() {
   const [targetPage, setTargetPage] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isHoveringCog, setIsHoveringCog] = useState(false);
   const [apiData, setApiData] = useState([]);
 
   const changePage = (page) => {
@@ -41,68 +39,11 @@ function MainView() {
       });
   }
 
-  console.log("Current Api data", apiData);
   return (
     <div className="Main-View">
-      <div className="Left-Menu">
-        <div className={`Left-Menu ${isHovered ? "selectedIsHovered" : ""}`}>
-          <div className="Left-Menu-Container d-flex flex-column  align-items-stretch">
-            {pages.map((target, index) => {
-              return (
-                <button
-                  key={index}
-                  className={
-                    "btn btn-lg m-0 px-4 py-4 btn-" +
-                    (targetPage == index ? "primary" : "secondary")
-                  }
-                  onClick={() => {
-                    setIsHovered(true);
-                    changePage(index);
-                  }}
-                  onMouseEnter={() =>
-                    targetPage === index && setIsHovered(true)
-                  }
-                  onMouseLeave={() => setIsHovered(false)}
-                >
-                  {target}
-                </button>
-              );
-            })}
-            <div className="Bottom-Menu d-flex justify-content-between align-items-center">
-              <img
-                className="px-3 Icon-Color IconRotate"
-                src={setting}
-                style={{
-                  animationPlayState: isHoveringCog ? "running" : "paused",
-                }}
-                onMouseEnter={() => setIsHoveringCog(true)}
-                onMouseLeave={() => setIsHoveringCog(false)}
-              ></img>
-              <img className="px-3 Icon-Color Icon" src={user}></img>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="Body-Panel">
-        {apiData.map((point, index) => {
-          // Assuming the maximum x and y values are 10, adjust if different
-          // Convert point.x and point.y to a percentage of the container size
-          const leftPercentage = point.x;
-          const bottomPercentage = point.y;
+      <LeftMenu targetPage={targetPage} changePage={changePage} />
 
-          return (
-            <div
-              key={index}
-              className="Dot"
-              style={{
-                left: `${leftPercentage}%`,
-                bottom: `${bottomPercentage}%`,
-                transform: "translate(-50%, 50%)", // Adjust dot position to center it based on its own size
-              }}
-            ></div>
-          );
-        })}
-      </div>
+      <ContentPanel apiData={apiData} />
     </div>
   );
 }
