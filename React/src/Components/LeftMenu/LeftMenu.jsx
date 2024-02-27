@@ -1,6 +1,7 @@
 import { useState } from "react";
 import setting from "../../assets/settings.svg";
 import user from "../../assets/user.svg";
+import "./LeftMenu.css";
 const pages = ["Points Stored in Database", "Get Random Points", "Recent"];
 function LeftMenu({ targetPage, changePage }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -15,7 +16,7 @@ function LeftMenu({ targetPage, changePage }) {
               <button
                 key={index}
                 className={
-                  "btn btn-lg btn-no-border m-0 px-4 py-4 btn-" +
+                  "btn btn-lg btn-left-menu m-0 px-4 py-4 btn-" +
                   (targetPage == index ? "primary" : "secondary")
                 }
                 onClick={() => {

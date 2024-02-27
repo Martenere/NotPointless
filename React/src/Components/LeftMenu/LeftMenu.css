@@ -1,0 +1,64 @@
+.Left-Menu {
+  position: relative;
+  height: 100%;
+  width: 13rem;
+  background-color: rgb(57, 62, 70);
+  border-right: 0px solid;
+
+  box-shadow: inset -4px 0 0 rgb(255, 211, 105);
+}
+
+.Left-Menu::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px; /* Initial border width */
+  background-color: rgb(255, 211, 105);
+  transition: width 0.4s ease; /* For a smooth transition effect */
+}
+.Left-Menu:hover::before {
+  width: 10px;
+}
+.Left-Menu.selectedIsHovered::before {
+  background-color: rgb(255, 245, 223);
+}
+.btn-left-menu {
+  flex: 1;
+  border-radius: 0 !important;
+}
+
+.Left-Menu-Container {
+  display: flex;
+  flex-direction: column;
+  height: 99%; /* Ensure the container takes full height - 100 makes  */
+}
+
+.Bottom-Menu {
+  height: 3rem;
+}
+
+.Icon-Color {
+  filter: invert(66%) sepia(49%) saturate(358%) hue-rotate(4deg) brightness(88%)
+    contrast(93%);
+}
+
+.Icon-Color:hover {
+  filter: invert(94%) sepia(4%) saturate(2317%) hue-rotate(319deg)
+    brightness(106%) contrast(103%);
+}
+
+@keyframes continuousRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.IconRotate {
+  animation: continuousRotate 4s linear infinite;
+  animation-play-state: paused;
+}
