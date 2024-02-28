@@ -1,5 +1,6 @@
 using restAPI_AspNet.Endpoints;
 using restAPI_AspNet.Repositories;
+using restAPI_AspNet.WebApplicationConfiguration;
 using YourProjectNamespace.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,8 @@ builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<IPointRepository, PointRepository>();
 
 
-ConfigureServices(builder.Services);
+WebApplicationConfiguration.ConfigureCORSpolicy(builder.Services);
+WebApplicationConfiguration.ConfigureIdentity(builder);
 
 builder.WebHost.UseUrls("http://localhost:5000", "https://localhost:5001");
 
@@ -30,23 +32,8 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowSpecificOrigin");
 app.ConfigureEndpoints();
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();
 
-void ConfigureServices(IServiceCollection services)
-{
-    // Add services to the container.
-    services.AddControllersWithViews();
-    services.AddRazorPages();
 
-    // Add CORS policy
-    services.AddCors(options =>
-    {
-        options.AddPolicy(name: "AllowSpecificOrigin",
-                          builder =>
-                          {
-                              builder.WithOrigins("http://localhost:3000") // Use the port your React app runs on
-                                     .AllowAnyHeader()
-                                     .AllowAnyMethod();
-                          });
-    });
-}

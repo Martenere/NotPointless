@@ -1,11 +1,12 @@
 ﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using restAPI_AspNet.Model;
 
 namespace YourProjectNamespace.Data
     {
-        public class DataContext : DbContext
+        public class DataContext : IdentityUserContext<ApplicationUser>
         {
             private string _connectionString;
 
@@ -25,6 +26,10 @@ namespace YourProjectNamespace.Data
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
+            //IMPORTANT
+            //Since using the IdentityUserContext we need to call the base class OnModelCreating
+            base.OnModelCreating(modelBuilder);
+
             // This method can be used to configure your model for the DbContext
             // For example, setting default values, configuring composite keys, etc.
 
@@ -43,7 +48,7 @@ namespace YourProjectNamespace.Data
             for (int i = 0; i < 10; i++)
             {
                 Random rnd = new Random();
-                InitPoints.Add(new Point() { Id = i+1, x = rnd.Next(100), y = rnd.Next(100) }); ;
+                InitPoints.Add(new Point() { Id = i+1, x = 10 + rnd.Next(80), y = 10 + rnd.Next(80) }); ;
             }
             modelBuilder.Entity<Point>().HasData(InitPoints);
         }
