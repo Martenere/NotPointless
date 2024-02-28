@@ -25,8 +25,8 @@ namespace restAPI_AspNet.WebApplicationConfiguration
             });
         }
         static public void ConfigureIdentity(WebApplicationBuilder builder)
-        {
-            builder.Services.AddIdentity<ApplicationUser, IdentityUser>(options =>
+        {§§
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.SignIn.RequireConfirmedEmail = false;
@@ -56,7 +56,7 @@ namespace restAPI_AspNet.WebApplicationConfiguration
                 ValidAudience = validAudience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(symmetricSecurityKey)),
 
-            }
+            };
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,7 +67,7 @@ namespace restAPI_AspNet.WebApplicationConfiguration
             {
                 options.IncludeErrorDetails = true;
                 options.TokenValidationParameters = TokenValidationParameters;
-            })
+            });
 
         }
     }

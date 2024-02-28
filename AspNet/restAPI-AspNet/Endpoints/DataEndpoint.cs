@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using restAPI_AspNet.Model;
 using restAPI_AspNet.Repositories;
 
@@ -35,6 +36,7 @@ namespace restAPI_AspNet.Endpoints
         }
 
         // CRUD operation handlers
+        [Authorize]
         private static async Task<IResult> AddPointAsync(IPointRepository repo, PointPayload PointPayload)
         {
             Point point = new Point() { x = PointPayload.x, y = PointPayload.y };
