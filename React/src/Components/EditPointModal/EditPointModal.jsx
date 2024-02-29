@@ -1,4 +1,4 @@
-import "./AddPointModal.css";
+import "./EditPointModal.css";
 
 function EditPointModal({ setShowAddPointMenu }) {
   function handleSubmit() {
