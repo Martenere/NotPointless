@@ -5,6 +5,9 @@
   height: 30rem;
   /* background-color: red; */
 }
+.Modal-Login > h1 {
+  color: rgb(255, 211, 105) !important;
+}
 .Modal-Login {
   position: absolute;
   z-index: 100;
