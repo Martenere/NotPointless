@@ -36,7 +36,8 @@ namespace restAPI_AspNet.Endpoints
         }
 
         // CRUD operation handlers
-        [Authorize]
+        //Enable when auth implemented in frontend
+        //[Authorize]
         private static async Task<IResult> AddPointAsync(IPointRepository repo, PointPayload PointPayload)
         {
             Point point = new Point() { x = PointPayload.x, y = PointPayload.y };
