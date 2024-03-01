@@ -23,10 +23,6 @@ function AddPointModal({ setShowAddPointMenu }) {
     try {
       fetch(url, options)
         .then((response) => {
-          console.log(response);
-          if (response.status === 401) {
-            console.log("need to login");
-          }
           if (!response.ok) {
             console.log(
               "Error when posting point to Api:",
