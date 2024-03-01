@@ -15,6 +15,7 @@ This project integrates a React frontend with an ASP.NET REST API, focusing on a
 
 - **Account Creation**: Implement account creation on the frontend.
 - **Tokens in frontend**: Enhance frontend to acquire and use JWT tokens.
+- **Move from in memory DB to postgre**: To allow for persistent data storage
 - **Dockerization**
 
 ## Test Run
