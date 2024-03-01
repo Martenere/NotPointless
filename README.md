@@ -2,6 +2,8 @@
 
 This project integrates a React frontend with an ASP.NET REST API, focusing on authentication, data management, and interaction between frontend and backend.
 
+<img src="https://github.com/Martenere/NotPointless/blob/main/Login.png" alt="drawing" width="600"/>
+
 ## Current Features
 
 - **Authentication**: Supports user authentication.
