@@ -20,12 +20,14 @@ This project integrates a React frontend with an ASP.NET REST API, focusing on a
 
 ## Test Run
 
-Backend Server
+**Requirements**: Ensure `dotnet` and `node` are installed.
 
-    Navigate to the /aspnet/ directory.
-    Open the .sln file and launch from there as a https server
+**Installation**:
+- Run `npm ci` in the `/react/` directory.
+- Install backend dependencies in `/aspnet/`.
 
-Frontend Application
+**Launching Servers**:
+- Execute `launch_apps.bat`.
 
-    Switch to the /react/ directory.
-    Run the command npm run dev to start the React frontend in development mode.
+**Access**:
+- Go to [http://localhost:3000/](http://localhost:3000/).
