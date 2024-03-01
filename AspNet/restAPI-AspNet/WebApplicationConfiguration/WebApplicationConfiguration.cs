@@ -25,7 +25,7 @@ namespace restAPI_AspNet.WebApplicationConfiguration
             });
         }
         static public void ConfigureIdentity(WebApplicationBuilder builder)
-        {§§
+        {
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;

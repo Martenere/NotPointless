@@ -1,0 +1,12 @@
+{
+  "name": "notpointLess",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cd React && vite",
+    "build": "cd React && vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "cd React && vite preview"
+  }
+}

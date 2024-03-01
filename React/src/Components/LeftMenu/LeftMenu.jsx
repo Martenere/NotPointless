@@ -4,14 +4,12 @@ import user from "../../assets/user.svg";
 import "./LeftMenu.css";
 import LoginPane from "../LoginPane/LoginPane.jsx";
 const pages = ["Points Stored in Database", "Get Random Points", "Recent"];
-function LeftMenu({ targetPage, changePage }) {
+function LeftMenu({ targetPage, changePage, showLoginPane, setShowLoginPane }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isHoveringCog, setIsHoveringCog] = useState(false);
-  const [showLoginPane, setShowLoginPane] = useState(false);
 
   return (
     <>
-      <LoginPane />
       <div className="Left-Menu">
         <div className={`Left-Menu ${isHovered ? "selectedIsHovered" : ""}`}>
           <div className="Left-Menu-Container d-flex flex-column  align-items-stretch">
@@ -46,7 +44,11 @@ function LeftMenu({ targetPage, changePage }) {
                 onMouseEnter={() => setIsHoveringCog(true)}
                 onMouseLeave={() => setIsHoveringCog(false)}
               ></img>
-              <img className="px-3 Icon-Color Icon" src={user}></img>
+              <img
+                className="px-3 Icon-Color Icon"
+                src={user}
+                onClick={() => setShowLoginPane(!showLoginPane)}
+              ></img>
             </div>
           </div>
         </div>
