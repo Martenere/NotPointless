@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./LoginPane.css";
+import sendRegisterRequest from "./LoginAPI";
 const loginFormEmpty = {
   name: "",
   password: "",
@@ -16,10 +17,15 @@ function LoginPane(props) {
     const { value, name } = event.target;
     setFormState({ ...formState, [name]: value });
   };
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formState);
+    sendRegisterRequest(formState.name, formState.password).then(
+      (registerResult) => console.log(registerResult),
+      (error) => console.log("Threw error", error)
+    );
   };
+
   return (
     <>
       <div className="overlay"></div>
