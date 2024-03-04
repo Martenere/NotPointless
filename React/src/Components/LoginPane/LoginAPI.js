@@ -14,16 +14,17 @@ function sendRegisterRequest(username, password) {
       },
       body: JSON.stringify(registerPayload),
     };
-    console.log("Send api req");
+    const apiResponse = {};
+    console.log("Send createAccount req");
     fetch(url, options)
       .then((response) => {
-        console.log(response);
-        // if (!response.ok) {
-        //   resolve(`HTTP error! Status:`, response);
-        // }
+        apiResponse.response = response;
         return response.json();
       })
-      .then((data) => resolve(data))
+      .then((data) => {
+        apiResponse.data = data;
+        resolve(apiResponse);
+      })
       .catch((error) => reject(error));
   });
 }
@@ -44,15 +45,17 @@ function sendLoginRequest(username, password) {
       },
       body: JSON.stringify(registerPayload),
     };
+    const apiResponse = {};
     console.log("Send Login req");
     fetch(url, options)
       .then((response) => {
-        if (!response.ok) {
-          resolve(`HTTP error! Status:`, response);
-        }
+        apiResponse.response = response;
         return response.json();
       })
-      .then((data) => resolve(data))
+      .then((data) => {
+        apiResponse.data = data;
+        resolve(apiResponse);
+      })
       .catch((error) => reject(error));
   });
 }

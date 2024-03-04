@@ -1,13 +1,22 @@
-.Login-Pane {
-  right: calc(50% - 15rem);
-  width: 30rem;
-  top: calc(50% - 15rem);
-  height: 30rem;
-
-  /* background-color: red; */
+.center-container {
+  position: absolute;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
-.Modal-Login > h1 {
-  color: rgb(255, 211, 105) !important;
+.Login-Pane {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 30rem;
+
+  min-height: 30rem;
+}
+.Modal-Login > div > h1 {
+  color: rgb(255, 211, 105);
 }
 .Modal-Login {
   position: absolute;
@@ -43,33 +52,16 @@
   backdrop-filter: blur(1px);
   z-index: 99;
 }
-/* .login-pane-nav {
-  box-shadow: inset 0px 2px 5px rgba(255, 211, 105, 0.5);
-} */
-.login-pane-nav::before {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 20px; /* Control the vertical fade extent */
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 211, 105, 0.5),
-    rgba(255, 211, 105, 0)
-  );
-}
 
-.login-pane-nav::after {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 20px; /* Control the horizontal fade extent */
-  background: linear-gradient(
-    to right,
-    rgba(255, 211, 105, 0.5),
-    rgba(255, 211, 105, 0)
-  );
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  box-shadow: inset -20px 0 20px -20px rgba(255, 211, 105, 0.5),
-    inset 20px 0 20px -20px rgba(255, 211, 105, 0.5);
+.error-text {
+  font-size: small;
+  color: rgb(189, 70, 70);
+}
+.success-text {
+  font-size: small;
+  color: rgb(14, 135, 57);
+}
+.btn.btn-create-account {
+  color: rgb(255, 211, 105);
+  border: 2px solid rgb(255, 211, 105);
 }
