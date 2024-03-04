@@ -20,10 +20,11 @@
     rgb(42, 47, 54),
     rgb(50, 56, 65)
   );
-  padding: 1rem;
+  padding-bottom: 1rem;
   box-shadow: 0px 0px 30px rgb(74, 75, 77), 8px 8px 10px rgba(23, 27, 32, 0.9);
   border: 3px solid rgb(55, 68, 83);
   border-radius: 10px;
+  overflow: hidden;
 }
 .Login-Input {
   font-size: x-large;
@@ -41,4 +42,34 @@
   background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(1px);
   z-index: 99;
+}
+/* .login-pane-nav {
+  box-shadow: inset 0px 2px 5px rgba(255, 211, 105, 0.5);
+} */
+.login-pane-nav::before {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px; /* Control the vertical fade extent */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 211, 105, 0.5),
+    rgba(255, 211, 105, 0)
+  );
+}
+
+.login-pane-nav::after {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 20px; /* Control the horizontal fade extent */
+  background: linear-gradient(
+    to right,
+    rgba(255, 211, 105, 0.5),
+    rgba(255, 211, 105, 0)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  box-shadow: inset -20px 0 20px -20px rgba(255, 211, 105, 0.5),
+    inset 20px 0 20px -20px rgba(255, 211, 105, 0.5);
 }
