@@ -24,6 +24,7 @@ namespace restAPI_AspNet.Endpoints
             root.MapDelete("/{id:int}", DeletePointAsync);
         }
         // Send random points
+        [Authorize]
         public static async Task<IResult> RandomPoints(int amount)
         { 
             List<Point> Points = new List<Point>();
