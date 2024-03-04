@@ -1,5 +1,6 @@
 ﻿using JwtRoleAuthentication.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using restAPI_AspNet.Enums;
 using restAPI_AspNet.Model;
 
@@ -11,6 +12,7 @@ namespace restAPI_AspNet.Endpoints
         public record RegisterResponseDto(string Email, UserRole Role);
         public record LoginDto(string Email, string Password);
         public record AuthResponseDto(string Token, string Email, UserRole Role);
+        public record LoginErrorDTO(string Code, string Description);
 
         public static void ConfigureAuthEndpoints(this WebApplication app)
         {
@@ -43,19 +45,46 @@ namespace restAPI_AspNet.Endpoints
 
         public async static Task<IResult> Login(LoginDto loginPayload, UserManager<ApplicationUser> userManager, TokenService tokenService)
         {
-            if (loginPayload.Email == null) { return TypedResults.BadRequest("Email is required."); }
-            if (loginPayload.Password == null) { return TypedResults.BadRequest("Password is required."); }
+            List<LoginErrorDTO> errorDTOs = new List<LoginErrorDTO>();
+            if (loginPayload.Email.IsNullOrEmpty())
+            {
+                errorDTOs.Add(new LoginErrorDTO("EmailRequired", "Email is required."));
+            }
+            if (loginPayload.Password.IsNullOrEmpty())
+            {
+                errorDTOs.Add(new LoginErrorDTO("PasswordRequired", "Password is required."));
+            }
+            if (errorDTOs.Any())
+            {
+                return TypedResults.BadRequest(errorDTOs);
+            }
 
             var user = await userManager.FindByEmailAsync(loginPayload.Email);
 
-            string InvalidCredentialString = "Invalid email or password.";
-            if (user == null) return TypedResults.BadRequest(InvalidCredentialString);
+            LoginErrorDTO InvalidCredentialDTO = new LoginErrorDTO("InvalidCredentials", "Wrong email or password.");
+            if (user == null)
+            {
+                errorDTOs.Add(InvalidCredentialDTO);
+                return TypedResults.BadRequest(errorDTOs);
+            }
 
             var isPasswordValid = await userManager.CheckPasswordAsync(user, loginPayload.Password);
-            if (!isPasswordValid) { return TypedResults.BadRequest(InvalidCredentialString); }
+            if (!isPasswordValid)
+            {
+                errorDTOs.Add(InvalidCredentialDTO);
+                return TypedResults.BadRequest(errorDTOs);
+            }
+
             var token = tokenService.CreateToken(user);
 
-            return TypedResults.Ok(new AuthResponseDto(token, user.Email, user.Role));
+            if (!errorDTOs.Any())
+            {
+                return TypedResults.Ok(new AuthResponseDto(token, user.Email, user.Role));
+            }
+            else
+            {
+                return TypedResults.BadRequest(errorDTOs);
+            }
         }
     }
 }
