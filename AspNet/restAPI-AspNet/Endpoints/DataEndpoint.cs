@@ -6,7 +6,8 @@ using restAPI_AspNet.Repositories;
 
 namespace restAPI_AspNet.Endpoints
 {
-    public record PointPayload(int x, int y);
+    public record PointPayload(string x, string y);
+
     public static class DataEndpoint
     {
         
@@ -38,9 +39,20 @@ namespace restAPI_AspNet.Endpoints
         // CRUD operation handlers
         //Enable when auth implemented in frontend
         //[Authorize]
-        private static async Task<IResult> AddPointAsync(IPointRepository repo, PointPayload PointPayload)
+        private static async Task<IResult> AddPointAsync(IPointRepository repo, PointPayload pointPayload)
         {
-            Point point = new Point() { x = PointPayload.x, y = PointPayload.y };
+            // Try to parse x and y to integers
+            bool isXValid = int.TryParse(pointPayload.x, out int x);
+            bool isYValid = int.TryParse(pointPayload.y, out int y);
+
+            if (!isXValid || !isYValid)
+            {
+                // If x or y can't be parsed to an integer, return a bad request
+                return TypedResults.BadRequest(new {Code="InvalidData", Description = "x and y must be valid integers" });
+            }
+
+            // If x and y are valid integers, proceed to add the point
+            Point point = new Point() { x = x, y = y };
             var addedPoint = await repo.AddPointAsync(point);
             return TypedResults.Created($"/points/{addedPoint.Id}", addedPoint);
         }
@@ -57,13 +69,23 @@ namespace restAPI_AspNet.Endpoints
             return point != null ? TypedResults.Ok(point) : TypedResults.NotFound();
         }
 
-        private static async Task<IResult> UpdatePointAsync(IPointRepository repo, int id, PointPayload PointPayload)
+        private static async Task<IResult> UpdatePointAsync(IPointRepository repo, int id, PointPayload pointPayload)
         {
+            // Try to parse x and y to integers
+            bool isXValid = int.TryParse(pointPayload.x, out int payloadX);
+            bool isYValid = int.TryParse(pointPayload.y, out int payloadY);
+
+            if (!isXValid || !isYValid)
+            {
+                // If x or y can't be parsed to an integer, return a bad request
+                return TypedResults.BadRequest(new { Code = "InvalidData", Description = "x and y must be valid integers" });
+            }
+
             Point point = new Point()
             {
                 Id = id,
-                x = PointPayload.x,
-                y = PointPayload.y,
+                x = payloadX,
+                y = payloadY,
             };
             var updatedPoint = await repo.UpdatePointAsync(id, point);
             return updatedPoint != null ? TypedResults.Ok(updatedPoint) : TypedResults.NotFound();

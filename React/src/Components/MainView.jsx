@@ -4,9 +4,7 @@ import LoginPane from "./LoginPane/LoginPane";
 import "./MainView.css";
 import { useState } from "react";
 
-// const pages = ["Points Stored in Database", "Get Random Points", "Recent"];
-function MainView(props) {
-  const { jwtBearerToken, setJwtBearerToken } = props;
+function MainView() {
   const [targetPage, setTargetPage] = useState(0);
   const [apiData, setApiData] = useState([]);
   const [showLoginPane, setShowLoginPane] = useState(false);
@@ -44,12 +42,7 @@ function MainView(props) {
 
   return (
     <>
-      {showLoginPane && (
-        <LoginPane
-          setJwtBearerToken={setJwtBearerToken}
-          setShowLoginPane={setShowLoginPane}
-        />
-      )}
+      {showLoginPane && <LoginPane setShowLoginPane={setShowLoginPane} />}
       <div className="Main-View">
         <LeftMenu
           targetPage={targetPage}

@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./LoginPane.css";
 import authApi from "./LoginAPI";
+import { UserContext } from "../../App";
 const loginFormEmpty = {
   name: "",
   password: "",
 };
 
 function LoginPane(props) {
+  const { processJwtBearerToken } = useContext(UserContext);
   // eslint-disable-next-line no-unused-vars
-  const { setJwtBearerToken, setShowLoginPane } = props;
+  const { setShowLoginPane } = props;
   const [formState, setFormState] = useState(loginFormEmpty);
   const [apiResponseErrorData, setApiResponseErrorData] = useState([]);
   const [apiResponseSuccessData, setApiResponseSuccessData] = useState("");
@@ -28,9 +30,10 @@ function LoginPane(props) {
 
   const createAccount = (event) => {
     event.preventDefault();
+    clearResponseData();
+
     authApi.sendRegisterRequest(formState.name, formState.password).then(
       (registerResult) => {
-        clearResponseData();
         if (registerResult.response.status != 201) {
           setApiResponseErrorData(registerResult.data);
         }
@@ -45,6 +48,7 @@ function LoginPane(props) {
   const login = (event) => {
     event.preventDefault();
     clearResponseData();
+
     authApi.sendLoginRequest(formState.name, formState.password).then(
       (loginResult) => {
         //if response is not "200 OK"
@@ -54,6 +58,7 @@ function LoginPane(props) {
         if (loginResult.response.status === 200) {
           console.log("Successful login", loginResult.data);
           setApiResponseSuccessData(loginResult.data.token);
+          processJwtBearerToken(loginResult.data.token);
         }
       },
       (error) => console.log("Threw error: ", error)

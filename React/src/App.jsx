@@ -3,9 +3,18 @@ import { createContext, useState } from "react";
 import "./App.css";
 import MainView from "./Components/MainView";
 export const UserContext = createContext();
-function App() {
-  const [jwtBearerToken, setJwtBearerToken] = useState("");
 
+const jwtTokenInStorage = localStorage.getItem("JwtToken");
+
+function App() {
+  const [jwtBearerToken, setJwtBearerToken] = useState(
+    jwtTokenInStorage ? jwtTokenInStorage : ""
+  );
+
+  function processJwtBearerToken(token) {
+    setJwtBearerToken(token);
+    localStorage.setItem("JwtToken", token);
+  }
   return (
     <>
       <UserContext.Provider
@@ -13,13 +22,10 @@ function App() {
           username: "",
           loggedIn: false,
           jwtBearerToken: jwtBearerToken,
-          setJwtBearerToken: setJwtBearerToken,
+          processJwtBearerToken: processJwtBearerToken,
         }}
       >
-        <MainView
-          jwtBearerToken={jwtBearerToken}
-          setJwtBearerToken={setJwtBearerToken}
-        />
+        <MainView />
       </UserContext.Provider>
     </>
   );
