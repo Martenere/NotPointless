@@ -44,7 +44,7 @@ public class TokenService
 
     private List<Claim> CreateClaims(ApplicationUser user)
     {
-        var jwtSub = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("JwtTokenSettings")["JwtRegisteredClaimNamesSub"];
+        //var jwtSub = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("JwtTokenSettings")["JwtRegisteredClaimNamesSub"];
 
         try
         {
