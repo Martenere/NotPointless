@@ -15,6 +15,10 @@ function App() {
     setJwtBearerToken(token);
     localStorage.setItem("JwtToken", token);
   }
+  function processLoginResponseData(loginData) {
+    setJwtBearerToken(data.token);
+    localStorage.setItem("JwtToken", token);
+  }
   return (
     <>
       <UserContext.Provider

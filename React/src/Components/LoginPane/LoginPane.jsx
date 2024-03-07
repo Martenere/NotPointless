@@ -59,6 +59,7 @@ function LoginPane(props) {
           console.log("Successful login", loginResult.data);
           setApiResponseSuccessData(loginResult.data.token);
           processJwtBearerToken(loginResult.data.token);
+          processLoginResponseData(loginResult.data.token);
         }
       },
       (error) => console.log("Threw error: ", error)
